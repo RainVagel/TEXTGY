@@ -1,0 +1,51 @@
+group 'vagel.textgy'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'antlr'
+apply plugin: 'idea'
+
+ext.antlr = [
+        generatedDir: 'src/gen',
+        destinationDir: 'src/gen/java'
+]
+
+compileJava.options.encoding = 'utf-8'
+compileTestJava.options.encoding = 'utf-8'
+//sourceCompatability = 1.8
+//targetCompatability = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr 'org.antlr:antlr4:4.5.3'
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    main.java.srcDir antlr.destinationDir
+    test.java.srcDir 'src/test/java'
+}
+
+idea {
+    module {
+        sourceDirs += file(antlr.destinationDir)
+    }
+}
+
+generateGrammarSource {
+    outputDirectory = file(antlr.destinationDir)
+}
+
+task run(type: JavaExec, dependsOn: classes) {
+    main 'Main'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete antlr.generatedDir
+}
