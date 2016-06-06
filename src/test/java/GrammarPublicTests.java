@@ -1,3 +1,5 @@
+import TEXTGY.TEXTGYLexer;
+import TEXTGY.TEXTGYParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Assert;
@@ -30,44 +32,67 @@ public class GrammarPublicTests {
 
     @Test
     public void iflauseTest() {
-        legal("IF (2 < 3)" +
-                "THEN" +
-                "2 - 3;" +
-                "END;");
+        legal("IF (2 < 3) THEN 2 - 3; END;");
 
-        legal("IF (2 == 4)" +
-                "THEN" +
-                "2+3;" +
-                "ELSE" +
-                "var : Integer X = 765;" +
-                "END;");
+        legal("IF (2 == 4) THEN 2+3; ELSE var : Integer X = 765; END;");
 
-        legal("IF (2 > 4)" +
-                "THEN" +
-                "2 + 5;" +
-                "ELSE IF (2 != 5)" +
-                "THEN" +
-                "2 - 1;" +
-                "ELSE" +
-                "2 * 4;" +
-                "END;");
+        legal("IF (2 > 4) THEN 2 + 5; ELSE IF (2 != 5) THEN 2 - 1; ELSE 2 * 4; END;");
 
-        illegal("IF ()" +
-                "THEN" +
-                "2 - 3;" +
-                "END;");
+        illegal("IF () THEN 2 - 3; END;");
 
-        illegal("IF (2 - 3)" +
-                "5 - 4;" +
-                "END;");
+        illegal("IF (2 - 3) 5 - 4; END;");
 
-        illegal("IF (2 - 5)" +
-                "THEN" +
-                "x = 3;" +
-                "ELSE IF (2 + 4)" +
-                "ELSE" +
-                "2 * 1;" +
-                "END;");
+        illegal("IF (2 - 5) THEN x = 3; ELSE IF (2 + 4) ELSE 2 * 1; END;");
+    }
+
+    @Test
+    public void whilelauseTest() {
+        legal("WHILE (3 < 2) DO 2 - 3; END;");
+        illegal("WHILE (2 < 3) 2 - 1; END;");
+        illegal("WHILE (3 == 3) DO 3-4;");
+        illegal("WHILE() DO 2 + 1; END;");
+    }
+
+    @Test
+    public void functionCreationSimpleTest() {
+        legal("CREATE NEW FUNCTION fnEskimo(): 2 - 3; END;");
+        legal("CREATE NEW FUNCTION fnEskimo(Integer : X): 2 == 1; END;");
+        legal("CREATE NEW FUNCTION fnHello(Integer : X, Boolean : Y): 2 + 1; END;");
+        legal("CREATE NEW FUNCTION fnHello() -> Integer: 2 - 1; END;");
+        illegal("CREATE NEW FUNCTION fnEskimo(x): 2 == 1; END;");
+        illegal("CREATE NEW FUNCTION Eskimo(Integer : X): 2 + 1; END;");
+        illegal("CREATE NEW FUNCTION fnEskimo(Integer : X): 2 - 1; ;");
+    }
+
+    @Test
+    public void functionUseSimpleTest() {
+        legal("fnEskimo();");
+        legal("fnEskimo(X,Tere);");
+        illegal("Eskimo();");
+        illegal("fnEskimo(X,);");
+        illegal("fnEskimo(,X);");
+    }
+
+    @Test
+    public void alterSimpleTest() {
+        legal("ALTER Eskimo ADD ITEM(Hello);");
+        legal("ALTER Eskimo REMOVE ITEM(Hello);");
+        legal("ALTER Eskimo HAS ITEM(Hello);");
+        legal("ALTER Eskimo HAS ITEM(Hello, Howareyoudoing);");
+        legal("ALTER Eskimo ADD SKILL (Damage:20);");
+        legal("ALTER Eskimo CHANGE SKILL (Damage : +2);");
+        legal("ALTER Eskimo CHANGE SKILL (Damage : 10);");
+        legal("ALTER Eskimo CHANGE DESCRIPTION (\"How are you doing?\");");
+        illegal("ALTER Eskimo CHANGE SKILL (Damage : \"Hello\");");
+        illegal("ALTER Eskimo ADD ITEM(2);");
+        illegal("ALTER Eskimo CHANGE DESCRIPTION (2);");
+    }
+
+    @Test
+    public void ifTreeTest() {
+        legal("IF (2 == 2) THEN IF(2 < 3) THEN fnMESSAGE(\"Hello\"); END; 2 + 3; END;");
+        legal("IF (2 -2) THEN IF(2 < 3) THEN 2 + 3; ELSE IF(2 == 1) THEN 2; END; ELSE 2*4; END;");
+        illegal("IF (2==0) IF(2 != 3) THEN fnMESSAGE(2); END; END;");
     }
 
     private void check(String program, boolean legal) {

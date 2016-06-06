@@ -9,11 +9,24 @@ lause
     |   iflause
     |   whilelause
     |   avaldis
-    |   
+    |   objektiloomine
+    |   funktsiooniloomine
+    |   alterlause
+    |   muutujadeklaratsioon
+    |   tagastuslause
+    ;
+
+tagastuslause
+    :   'return' avaldis
     ;
 
 omistamine
-    :   'var' ':' tuup MUUTUJANIMI '=' avaldis
+    :   MUUTUJANIMI '=' avaldis
+    ;
+
+muutujadeklaratsioon
+    :   'var' ':' tuup MUUTUJANIMI ('=' avaldis)?
+    |   'var' MUUTUJANIMI '=' avaldis
     ;
 
 tuup
@@ -21,31 +34,6 @@ tuup
     |   'Integer'
     |   'Double'
     |   'String'
-    ;
-
-avaldis
-    :   avaldis '+' avaldis2
-    |   avaldis '-' avaldis2
-    |   avaldis ('<'|'>'|'<='|'>='|'=='|'!='|'AND'|'OR'|'NOT') avaldis
-    |   avaldis2
-    ;
-
-avaldis2
-    :   avaldis2 '*' avaldis3
-    |   avaldis2 '/' avaldis3
-    |   avaldis3
-    ;
-
-avaldis3
-    :   '-'* atom
-    ;
-
-atom
-    :   SONE
-    |   MUUTUJANIMI
-    |   ARV
-//    |   funktsioon
-    |   '('avaldis')'
     ;
 
 iflause
@@ -56,8 +44,100 @@ whilelause
     :   'WHILE' '(' avaldis ')' 'DO' programm 'END'
     ;
 
+alterlause
+    :   'ALTER' MUUTUJANIMI altertegevus
+    ;
+
+altertegevus
+    :   hastegevus
+    |   addtegevus
+    |   removetegevus
+    |   changetegevus
+    ;
+
+hastegevus
+    :   'HAS' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    |   'HAS' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)*')'
+    |   'HAS' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    ;
+
+addtegevus
+    :   'ADD' 'ITEM' '(' MUUTUJANIMI  (',' MUUTUJANIMI)* ')'
+    |   'ADD' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'
+    |   'ADD' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    ;
+
+removetegevus
+    :   'REMOVE' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    |   'REMOVE' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    |   'REMOVE' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    ;
+
+changetegevus
+    :   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ('+'|'-') ARV ')'
+    |   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'
+    |   'CHANGE' 'DESCRIPTION' '(' SONE ')'
+    ;
+
+objektiloomine
+    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' objektiparameetrid 'END'
+    ;
+
+funktsiooniloomine
+    :   'CREATE' 'NEW' 'FUNCTION' FUNKTSIOONINIMI '(' ((tuup ':' MUUTUJANIMI ',')* tuup ':' MUUTUJANIMI)? ')' ':' programm 'END'
+    |   'CREATE' 'NEW' 'FUNCTION' FUNKTSIOONINIMI '(' ((tuup ':' MUUTUJANIMI ',')* tuup ':' MUUTUJANIMI)? ')' '->' tuup ':' programm 'END'
+    ;
+
+objektituup
+    :   MUUTUJANIMI
+    ;
+
+objektiparameetrid
+    :   MUUTUJANIMI '(' avaldis (',' avaldis)* ')'
+    ;
+
+avaldis
+    :   avaldis5
+    ;
+
+avaldis5
+    :   avaldis4 ('<'|'>'|'<='|'>='|'=='|'!='|'AND'|'OR'|'NOT') avaldis4        # Vordlemine
+    |   avaldis4                                                                # TriviaalneAvaldis5
+    ;
+
+avaldis4
+    :   avaldis4 ('+'|'-') avaldis3                                             # LiitmineLahutamine
+    |   avaldis3                                                                # TriviaalneAvaldis4
+    ;
+
+avaldis3
+    :   avaldis3 ('*'|'/') avaldis2                                             # KorrutamineJagamine
+    |   avaldis2                                                                # TriviaalneAvaldis3
+    ;
+
+avaldis2
+    :   '-' avaldis2                                                            # UnaarneMiinus
+    |   avaldis1                                                                # TriviaalneAvaldis2
+    ;
+
+avaldis1
+    :   FUNKTSIOONINIMI '(' (avaldis (',' avaldis )*)? ')' # FunktsiooniValjakutse
+    |   avaldis0                                                                # TriviaalneAvaldis1
+    ;
+
+avaldis0
+    :   SONE                                                                    # SoneLiteraalR
+    |   MUUTUJANIMI                                                             # MuutujaNimiR
+    |   ARV                                                                     # ArvuLiteraalR
+    |   '('avaldis')'                                                           # SuluAvaldis
+    ;
+
+FUNKTSIOONINIMI
+    : 'fn'[A-Z\u00c4\u00d6\u00dc\u00D5][A-Z\u00c4\u00d6\u00dc\u00D5a-õ0-9_]*
+    ;
+
 MUUTUJANIMI
-    :   [A-Z\u00c4\u00d6\u00dc\u00D5][a-õ0-9_]*
+    :   [A-Z\u00c4\u00d6\u00dc\u00D5][A-Z\u00c4\u00d6\u00dc\u00D5a-õ0-9_]*
     ;
 
 SONE
@@ -67,6 +147,7 @@ SONE
 ARV
     :   [1-9]+
     |   [1-9][0-9]*
+    |   [0-9]+ '.' [0-9]+
     ;
 
 WS

@@ -7,7 +7,10 @@ apply plugin: 'idea'
 
 ext.antlr = [
         generatedDir: 'src/gen',
-        destinationDir: 'src/gen/java'
+        classPathDir: 'src/gen/java',
+        destinationDir: 'src/gen/java/TEXTGY',
+        grammarpackage: 'TEXTGY'
+
 ]
 
 compileJava.options.encoding = 'utf-8'
@@ -27,18 +30,19 @@ dependencies {
 
 sourceSets {
     main.java.srcDir 'src/main/java'
-    main.java.srcDir antlr.destinationDir
+    main.java.srcDir 'src/gen/java'
     test.java.srcDir 'src/test/java'
 }
 
 idea {
     module {
-        sourceDirs += file(antlr.destinationDir)
+        sourceDirs += file(antlr.classPathDir)
     }
 }
 
 generateGrammarSource {
     outputDirectory = file(antlr.destinationDir)
+    arguments += ["-visitor", "-package", antlr.grammarpackage]
 }
 
 task run(type: JavaExec, dependsOn: classes) {
