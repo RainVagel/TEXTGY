@@ -18,6 +18,16 @@ public interface TEXTGYListener extends ParseTreeListener {
 	 */
 	void exitProgramm(TEXTGYParser.ProgrammContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TEXTGYParser#lausetejada}.
+	 * @param ctx the parse tree
+	 */
+	void enterLausetejada(TEXTGYParser.LausetejadaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TEXTGYParser#lausetejada}.
+	 * @param ctx the parse tree
+	 */
+	void exitLausetejada(TEXTGYParser.LausetejadaContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TEXTGYParser#lause}.
 	 * @param ctx the parse tree
 	 */
@@ -108,45 +118,149 @@ public interface TEXTGYListener extends ParseTreeListener {
 	 */
 	void exitAltertegevus(TEXTGYParser.AltertegevusContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TEXTGYParser#hastegevus}.
+	 * Enter a parse tree produced by the {@code HasItem}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void enterHastegevus(TEXTGYParser.HastegevusContext ctx);
+	void enterHasItem(TEXTGYParser.HasItemContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TEXTGYParser#hastegevus}.
+	 * Exit a parse tree produced by the {@code HasItem}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void exitHastegevus(TEXTGYParser.HastegevusContext ctx);
+	void exitHasItem(TEXTGYParser.HasItemContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TEXTGYParser#addtegevus}.
+	 * Enter a parse tree produced by the {@code HasSkill}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void enterAddtegevus(TEXTGYParser.AddtegevusContext ctx);
+	void enterHasSkill(TEXTGYParser.HasSkillContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TEXTGYParser#addtegevus}.
+	 * Exit a parse tree produced by the {@code HasSkill}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void exitAddtegevus(TEXTGYParser.AddtegevusContext ctx);
+	void exitHasSkill(TEXTGYParser.HasSkillContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TEXTGYParser#removetegevus}.
+	 * Enter a parse tree produced by the {@code HasAttribute}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void enterRemovetegevus(TEXTGYParser.RemovetegevusContext ctx);
+	void enterHasAttribute(TEXTGYParser.HasAttributeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TEXTGYParser#removetegevus}.
+	 * Exit a parse tree produced by the {@code HasAttribute}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 */
-	void exitRemovetegevus(TEXTGYParser.RemovetegevusContext ctx);
+	void exitHasAttribute(TEXTGYParser.HasAttributeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TEXTGYParser#changetegevus}.
+	 * Enter a parse tree produced by the {@code AddItem}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
 	 * @param ctx the parse tree
 	 */
-	void enterChangetegevus(TEXTGYParser.ChangetegevusContext ctx);
+	void enterAddItem(TEXTGYParser.AddItemContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TEXTGYParser#changetegevus}.
+	 * Exit a parse tree produced by the {@code AddItem}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
 	 * @param ctx the parse tree
 	 */
-	void exitChangetegevus(TEXTGYParser.ChangetegevusContext ctx);
+	void exitAddItem(TEXTGYParser.AddItemContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AddSkill}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSkill(TEXTGYParser.AddSkillContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AddSkill}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSkill(TEXTGYParser.AddSkillContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AddAttribute}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddAttribute(TEXTGYParser.AddAttributeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AddAttribute}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddAttribute(TEXTGYParser.AddAttributeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RemoveItem}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterRemoveItem(TEXTGYParser.RemoveItemContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RemoveItem}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitRemoveItem(TEXTGYParser.RemoveItemContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RemoveSkill}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterRemoveSkill(TEXTGYParser.RemoveSkillContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RemoveSkill}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitRemoveSkill(TEXTGYParser.RemoveSkillContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RemoveAttribute}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterRemoveAttribute(TEXTGYParser.RemoveAttributeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RemoveAttribute}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitRemoveAttribute(TEXTGYParser.RemoveAttributeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ChangeSkillPlusMinus}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterChangeSkillPlusMinus(TEXTGYParser.ChangeSkillPlusMinusContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ChangeSkillPlusMinus}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitChangeSkillPlusMinus(TEXTGYParser.ChangeSkillPlusMinusContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ChangeSkillRegular}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterChangeSkillRegular(TEXTGYParser.ChangeSkillRegularContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ChangeSkillRegular}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitChangeSkillRegular(TEXTGYParser.ChangeSkillRegularContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ChangeDescription}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void enterChangeDescription(TEXTGYParser.ChangeDescriptionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ChangeDescription}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 */
+	void exitChangeDescription(TEXTGYParser.ChangeDescriptionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TEXTGYParser#objektiloomine}.
 	 * @param ctx the parse tree
@@ -178,15 +292,53 @@ public interface TEXTGYListener extends ParseTreeListener {
 	 */
 	void exitObjektituup(TEXTGYParser.ObjektituupContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TEXTGYParser#objektiparameetrid}.
+	 * Enter a parse tree produced by the {@code DescriptionParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
 	 * @param ctx the parse tree
 	 */
-	void enterObjektiparameetrid(TEXTGYParser.ObjektiparameetridContext ctx);
+	void enterDescriptionParameeter(TEXTGYParser.DescriptionParameeterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TEXTGYParser#objektiparameetrid}.
+	 * Exit a parse tree produced by the {@code DescriptionParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
 	 * @param ctx the parse tree
 	 */
-	void exitObjektiparameetrid(TEXTGYParser.ObjektiparameetridContext ctx);
+	void exitDescriptionParameeter(TEXTGYParser.DescriptionParameeterContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ItemParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void enterItemParameeter(TEXTGYParser.ItemParameeterContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ItemParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void exitItemParameeter(TEXTGYParser.ItemParameeterContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SkillParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void enterSkillParameeter(TEXTGYParser.SkillParameeterContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SkillParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void exitSkillParameeter(TEXTGYParser.SkillParameeterContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AttributeParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttributeParameeter(TEXTGYParser.AttributeParameeterContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AttributeParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttributeParameeter(TEXTGYParser.AttributeParameeterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TEXTGYParser#avaldis}.
 	 * @param ctx the parse tree

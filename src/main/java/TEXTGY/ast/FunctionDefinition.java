@@ -7,11 +7,13 @@ public class FunctionDefinition extends Statement {
 
 	private String name;
 	private List<FunctionParameter> params;
+	private String type;
 	private Block body;
 
-	public FunctionDefinition(String name, List<FunctionParameter> params,
+	public FunctionDefinition(String name, String type, List<FunctionParameter> params,
 			Block body) {
 				this.name = name;
+				this.type = type;
 				this.params = params;
 				this.body = body;
 	}
@@ -19,7 +21,11 @@ public class FunctionDefinition extends Statement {
 	public String getName() {
 		return name;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
 	public List<FunctionParameter> getParameters() {
 		return this.params;
 	}
@@ -30,7 +36,7 @@ public class FunctionDefinition extends Statement {
 	
 	@Override
 	public List<Object> getChildren() {
-		return Arrays.asList(name, params, body);
+		return Arrays.asList(name, type, params, body);
 	}
 
 }

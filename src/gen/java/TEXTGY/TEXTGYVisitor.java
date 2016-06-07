@@ -17,6 +17,12 @@ public interface TEXTGYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgramm(TEXTGYParser.ProgrammContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TEXTGYParser#lausetejada}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLausetejada(TEXTGYParser.LausetejadaContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TEXTGYParser#lause}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -71,29 +77,89 @@ public interface TEXTGYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAltertegevus(TEXTGYParser.AltertegevusContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TEXTGYParser#hastegevus}.
+	 * Visit a parse tree produced by the {@code HasItem}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHastegevus(TEXTGYParser.HastegevusContext ctx);
+	T visitHasItem(TEXTGYParser.HasItemContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TEXTGYParser#addtegevus}.
+	 * Visit a parse tree produced by the {@code HasSkill}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAddtegevus(TEXTGYParser.AddtegevusContext ctx);
+	T visitHasSkill(TEXTGYParser.HasSkillContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TEXTGYParser#removetegevus}.
+	 * Visit a parse tree produced by the {@code HasAttribute}
+	 * labeled alternative in {@link TEXTGYParser#hastegevus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRemovetegevus(TEXTGYParser.RemovetegevusContext ctx);
+	T visitHasAttribute(TEXTGYParser.HasAttributeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TEXTGYParser#changetegevus}.
+	 * Visit a parse tree produced by the {@code AddItem}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitChangetegevus(TEXTGYParser.ChangetegevusContext ctx);
+	T visitAddItem(TEXTGYParser.AddItemContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AddSkill}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSkill(TEXTGYParser.AddSkillContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AddAttribute}
+	 * labeled alternative in {@link TEXTGYParser#addtegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddAttribute(TEXTGYParser.AddAttributeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RemoveItem}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRemoveItem(TEXTGYParser.RemoveItemContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RemoveSkill}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRemoveSkill(TEXTGYParser.RemoveSkillContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RemoveAttribute}
+	 * labeled alternative in {@link TEXTGYParser#removetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRemoveAttribute(TEXTGYParser.RemoveAttributeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ChangeSkillPlusMinus}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChangeSkillPlusMinus(TEXTGYParser.ChangeSkillPlusMinusContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ChangeSkillRegular}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChangeSkillRegular(TEXTGYParser.ChangeSkillRegularContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ChangeDescription}
+	 * labeled alternative in {@link TEXTGYParser#changetegevus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChangeDescription(TEXTGYParser.ChangeDescriptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TEXTGYParser#objektiloomine}.
 	 * @param ctx the parse tree
@@ -113,11 +179,33 @@ public interface TEXTGYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObjektituup(TEXTGYParser.ObjektituupContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TEXTGYParser#objektiparameetrid}.
+	 * Visit a parse tree produced by the {@code DescriptionParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitObjektiparameetrid(TEXTGYParser.ObjektiparameetridContext ctx);
+	T visitDescriptionParameeter(TEXTGYParser.DescriptionParameeterContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ItemParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitItemParameeter(TEXTGYParser.ItemParameeterContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SkillParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSkillParameeter(TEXTGYParser.SkillParameeterContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AttributeParameeter}
+	 * labeled alternative in {@link TEXTGYParser#objektiparameetrid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAttributeParameeter(TEXTGYParser.AttributeParameeterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TEXTGYParser#avaldis}.
 	 * @param ctx the parse tree

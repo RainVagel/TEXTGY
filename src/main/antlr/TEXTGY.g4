@@ -1,6 +1,10 @@
 grammar TEXTGY;
 
 programm
+    :   lausetejada
+    ;
+
+lausetejada
     :   (lause ';')*
     ;
 
@@ -37,7 +41,7 @@ tuup
     ;
 
 iflause
-    :   'IF' '(' avaldis ')' 'THEN' programm ('ELSE IF' '(' avaldis ')' 'THEN' programm)* ('ELSE' programm)* 'END'
+    :   'IF' '(' avaldis ')' 'THEN' programm ('ELSE IF' '(' avaldis ')' 'THEN' programm)* ('ELSE' programm)? 'END'
     ;
 
 whilelause
@@ -56,31 +60,31 @@ altertegevus
     ;
 
 hastegevus
-    :   'HAS' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
-    |   'HAS' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)*')'
-    |   'HAS' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    :   'HAS' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                         # HasItem
+    |   'HAS' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)*')'                         # HasSkill
+    |   'HAS' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # HasAttribute
     ;
 
 addtegevus
-    :   'ADD' 'ITEM' '(' MUUTUJANIMI  (',' MUUTUJANIMI)* ')'
-    |   'ADD' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'
-    |   'ADD' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    :   'ADD' 'ITEM' '(' MUUTUJANIMI  (',' MUUTUJANIMI)* ')'                        # AddItem
+    |   'ADD' 'SKILL' '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'        # AddSkill
+    |   'ADD' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # AddAttribute
     ;
 
 removetegevus
-    :   'REMOVE' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
-    |   'REMOVE' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
-    |   'REMOVE' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'
+    :   'REMOVE' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                      # RemoveItem
+    |   'REMOVE' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                     # RemoveSkill
+    |   'REMOVE' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                 # RemoveAttribute
     ;
 
 changetegevus
-    :   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ('+'|'-') ARV ')'
-    |   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'
-    |   'CHANGE' 'DESCRIPTION' '(' SONE ')'
+    :   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ('+'|'-') ARV ')'                      # ChangeSkillPlusMinus
+    |   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'                                # ChangeSkillRegular
+    |   'CHANGE' 'DESCRIPTION' '(' SONE ')'                                         # ChangeDescription
     ;
 
 objektiloomine
-    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' objektiparameetrid 'END'
+    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' objektiparameetrid (',' objektiparameetrid)* 'END'
     ;
 
 funktsiooniloomine
@@ -89,11 +93,16 @@ funktsiooniloomine
     ;
 
 objektituup
-    :   MUUTUJANIMI
+    :   'Creature'
+    |   'Item'
+    |   'Room'
     ;
 
 objektiparameetrid
-    :   MUUTUJANIMI '(' avaldis (',' avaldis)* ')'
+    :   'DESCRIPTION' '(' SONE ')'                                              # DescriptionParameeter
+    |   'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                           # ItemParameeter
+    |   'SKILL' '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'          # SkillParameeter
+    |   'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                      # AttributeParameeter
     ;
 
 avaldis
