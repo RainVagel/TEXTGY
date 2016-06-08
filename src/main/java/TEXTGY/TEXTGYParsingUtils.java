@@ -330,6 +330,9 @@ public class TEXTGYParsingUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(createAst("ALTER X CHANGE SKILL(Damage: -2);"));
+        System.out.println(createAst("var : Integer X = 2;\n" +
+                "CREATE NEW FUNCTION fnEskimo(Integer:X) -> Integer:\n" +
+                "fnPrint(X);\n" +
+                "END;"));
     }
 }

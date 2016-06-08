@@ -24,6 +24,6 @@ public class FunctionParameter extends AstNode implements VariableBinding {
 
 	@Override
 	public List<Object> getChildren() {
-		return Arrays.asList(parameterName);
+		return Arrays.asList(parameterName, parameterType);
 	}
 }
