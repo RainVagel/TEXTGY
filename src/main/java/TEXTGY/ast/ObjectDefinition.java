@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by rainvagel on 07.06.16.
  */
-public class ObjectDefinition extends Statement implements VariableBinding {
+public class ObjectDefinition extends Expression {
     private String name;
     private List<ObjectParameter> parameterList;
     private String type;
@@ -22,16 +22,6 @@ public class ObjectDefinition extends Statement implements VariableBinding {
     }
 
     public String getType() {
-        return type;
-    }
-
-    @Override
-    public String getVariableName() {
-        return name;
-    }
-
-    @Override
-    public String getVariableType() {
         return type;
     }
 

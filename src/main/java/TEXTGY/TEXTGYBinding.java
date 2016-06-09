@@ -2,6 +2,7 @@ package TEXTGY;
 
 import TEXTGY.ast.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class TEXTGYBinding {
             VariableDeclaration declaration = (VariableDeclaration) node;
             bindingMap.put(declaration.getVariableName(), declaration);
             visibleTypes.put(declaration.getVariableName(), declaration.getVariableType());
+            if (((VariableDeclaration) node).getInitializer() instanceof ObjectDefinition) {
+                bindVariables(((VariableDeclaration) node).getInitializer(), bindingMap, visibleTypes);
+            }
         }
         else if (node instanceof Variable) {
             Variable var = (Variable) node;
@@ -48,6 +52,16 @@ public class TEXTGYBinding {
                 bindVariables(statement, funBindings, visibleTypes);
             }
         }
+        else if (node instanceof AlterAction) {
+            for (Expression expression : ((AlterAction) node).getParameters()) {
+                bindVariables(expression, bindingMap, visibleTypes);
+            }
+        }
+        else if (node instanceof ObjectDefinition) {
+            for (ObjectParameter parameter : ((ObjectDefinition) node).getParameterList()) {
+                bindVariables(parameter, bindingMap, visibleTypes);
+            }
+        }
         else {
             List<Object> children = node.getChildren();
             for (Object child : children) {
@@ -57,5 +71,20 @@ public class TEXTGYBinding {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        bindVariables(new Block(Arrays.asList(
+                new VariableDeclaration("Sword", "Object", new ObjectDefinition("Sword", Arrays.asList(
+                        new ObjectParameter("fnDescription", new StringLiteral("Yo!"))
+                ), "Creature")),
+                new VariableDeclaration("X", "Object", new ObjectDefinition("X", Arrays.asList(
+                        new ObjectParameter("fnDescription", new StringLiteral("Hello")), new ObjectParameter("fnItem", new Variable("Sword"))
+                ), "Creature"))
+        )));
+//        bindVariables(new Block(Arrays.asList(
+//                new VariableDeclaration("X", "Integer", new IntegerLiteral(3)),
+//                new ExpressionStatement(new FunctionCall("fnPrint", new Variable("X")))
+//        )));
     }
 }

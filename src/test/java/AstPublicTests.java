@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -68,9 +69,12 @@ public class AstPublicTests {
     @Test
     public void objCreateTest(){
 //        CREATE NEW OBJECT X AS TYPE Creature WITH DESCRIPTION("Hey")END;
+        List<ObjectParameter> list = new ArrayList<>();
+        list.add(new ObjectParameter("fnDescription", new StringLiteral("Hey")));
         assertEquals(
-                new Block(Arrays.asList(new ObjectDefinition("X", Arrays.asList(new ObjectParameter("Description",Arrays.asList("Hey"))), "Creature"))),
-                TEXTGYParsingUtils.createAst("CREATE NEW OBJECT X AS TYPE Creature WITH DESCRIPTION(\"Hey\")END;")
+                new Block(Arrays.asList(
+                        new VariableDeclaration("X", "Object", new ObjectDefinition("X", list, "Creature")))),
+                TEXTGYParsingUtils.createAst("var : Object X = CREATE NEW OBJECT X AS TYPE Creature WITH fnDescription(\"Hey\")END;")
         );
     }
 

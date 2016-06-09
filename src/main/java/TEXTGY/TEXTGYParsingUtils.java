@@ -45,6 +45,9 @@ public class TEXTGYParsingUtils {
         else if (parseTree instanceof SuluAvaldisContext) {
             return parseTreeToAst(parseTree.getChild(1));
         }
+        else if (parseTree instanceof SkillAvaldisContext) {
+            return new SkillLiteral(parseTree.getChild(0).getText(), Integer.parseInt(parseTree.getChild(2).getText()));
+        }
         else if (parseTree instanceof FunktsiooniloomineContext) {
             String name = parseTree.getChild(3).getText();
             String type;
@@ -68,6 +71,18 @@ public class TEXTGYParsingUtils {
         }
         else if (parseTree instanceof TagastuslauseContext) {
             return new ReturnStatement((Expression)parseTreeToAst(parseTree.getChild(1)));
+        }
+        else if (parseTree instanceof FunktsioonivaljakutseobjektContext) {
+            String functionName = parseTree.getChild(0).getText();
+
+            List<Expression> args = new ArrayList<>();
+
+            if (parseTree.getChildCount() > 3) {
+                for (int i = 2; i < parseTree.getChildCount(); i += 2) {
+                    args.add((Expression)parseTreeToAst(parseTree.getChild(i)));
+                }
+            }
+            return new ObjectParameter(functionName, args);
         }
         else if (parseTree instanceof FunktsiooniValjakutseContext) {
             String functionName = parseTree.getChild(0).getText();
@@ -94,108 +109,13 @@ public class TEXTGYParsingUtils {
             return new FunctionCall(operator, Arrays.asList(leftArg,rightArg));
         }
         else if (parseTree instanceof AlterlauseContext) {
-            String type = parseTree.getChild(1).getText();
-            Statement action = (Statement) parseTreeToAst(parseTree.getChild(2));
-            return new AlterStatement(type, action);
-        }
-        else if (parseTree instanceof HasItemContext){
-            String type = "ITEM";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("HAS",type, args);
-        }
-        else if (parseTree instanceof HasAttributeContext){
-            String type = "ATTRIBUTE";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("HAS", type, args);
-        }
-        else if (parseTree instanceof HasSkillContext){
-            String type = "SKILL";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("HAS", type, args);
-        }
-        else if (parseTree instanceof AddAttributeContext){
-            String type = "ATTRIBUTE";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("ADD", type, args);
-        }
-        else if (parseTree instanceof AddItemContext){
-            String type = "ITEM";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("ADD", type, args);
-        }
-        else if (parseTree instanceof AddSkillContext){
-            String type = "SKILL";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=4){
-                String entry = parseTree.getChild(i).getText() + ":" +
-                        parseTree.getChild(i+2).getText();
-                args.add(entry);
-            }
-            return new AlterAction("ADD", type, args);
-        }
-        else if (parseTree instanceof RemoveAttributeContext) {
-            String type = "ATTRIBUTE";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("REMOVE", type, args);
-        }
-        else if (parseTree instanceof RemoveItemContext) {
-            String type = "ITEM";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("REMOVE", type, args);
-        }
-        else if (parseTree instanceof RemoveSkillContext) {
-            String type = "SKILL";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=2){
-                args.add(parseTree.getChild(i).getText());
-            }
-            return new AlterAction("REMOVE", type, args);
-        }
-        else if (parseTree instanceof ChangeDescriptionContext) {
-            String type = "DESCRIPTION";
-            List<String> args = new ArrayList<>();
-            args.add(parseTree.getChild(3).getText().substring(1, parseTree.getChild(3).getText().length()-1));
-            return new AlterAction("CHANGE", type, args);
-        }
-        else if (parseTree instanceof ChangeSkillPlusMinusContext) {
-            String type = "SKILL";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=5){
-                String entry = parseTree.getChild(i).getText() + ':' + parseTree.getChild(i+2).getText()
-                        + parseTree.getChild(i+3).getText();
-                args.add(entry);
-            }
-            return new AlterAction("CHANGE", type, args);
-        }
-        else if (parseTree instanceof ChangeSkillRegularContext) {
-            String type = "SKILL";
-            List<String> args = new ArrayList<>();
-            for (int i = 3; i < parseTree.getChildCount()-1;i+=4){
-                String entry = parseTree.getChild(i).getText() + ':' + parseTree.getChild(i+2).getText();
-                args.add(entry);
-            }
-            return new AlterAction("CHANGE", type, args);
+            String objectName = parseTree.getChild(1).getText();
+            String functionName = parseTree.getChild(2).getText();
+            List<Expression> parameters = new ArrayList<>();
+                for (int i = 4; i < parseTree.getChildCount(); i+= 2) {
+                    parameters.add((Expression)parseTreeToAst(parseTree.getChild(i)));
+                }
+            return new AlterAction(objectName,functionName,parameters);
         }
         else if (parseTree instanceof MuutujadeklaratsioonContext) {
             String name;
@@ -203,8 +123,13 @@ public class TEXTGYParsingUtils {
 
             Expression start = null;
 
+            if (parseTree.getChild(5) instanceof ObjektiloomineContext) {
+                name = parseTree.getChild(3).getText();
+                type = parseTree.getChild(2).getText();
+                start = (Expression) parseTreeToAst(parseTree.getChild(5));
+            }
             //Type and expression
-            if (parseTree.getChildCount() == 6) {
+            else if (parseTree.getChildCount() == 6) {
                 name = parseTree.getChild(3).getText();
                 type = parseTree.getChild(2).getText();
                 start = (Expression) parseTreeToAst(parseTree.getChild(5));
@@ -274,31 +199,10 @@ public class TEXTGYParsingUtils {
             String name = parseTree.getChild(3).getText();
             String type = parseTree.getChild(6).getText();
             ArrayList<ObjectParameter> parameterArrayList = new ArrayList<>();
-            for (int i = 8; i < parseTree.getChildCount() - 1; i+=2) {
+            for (int i = 8; i < parseTree.getChildCount()-1; i+=2){
                 parameterArrayList.add((ObjectParameter) parseTreeToAst(parseTree.getChild(i)));
             }
             return new ObjectDefinition(name, parameterArrayList, type);
-        }
-        else if (parseTree instanceof DescriptionParameeterContext) {
-            String type = parseTree.getChild(0).getText();
-            String parameter = parseTree.getChild(2).getText().substring(1, parseTree.getChild(2).getText().length()-1);
-            return new ObjectParameter(type, Arrays.asList(parameter));
-        }
-        else if (parseTree instanceof SkillParameeterContext) {
-            String type = parseTree.getChild(0).getText();
-            List<String> parameters = new ArrayList<>();
-            for ( int i = 2; i < parseTree.getChildCount()-1; i += 4){
-                parameters.add(parseTree.getChild(i).getText() + ":" + parseTree.getChild(i+2).getText());
-            }
-            return new ObjectParameter(type, parameters);
-        }
-        else if (parseTree instanceof AttributeParameeterContext | parseTree instanceof ItemParameeterContext) {
-            String type = parseTree.getChild(0).getText();
-            List<String> parameters = new ArrayList<>();
-            for (int i = 2; i < parseTree.getChildCount()-1; i+=2) {
-                parameters.add(parseTree.getChild(i).getText());
-            }
-            return new ObjectParameter(type, parameters);
         }
         else if (parseTree instanceof LausetejadaContext) {
             ArrayList<Statement> statementArrayList = new ArrayList<>();
@@ -330,9 +234,6 @@ public class TEXTGYParsingUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(createAst("var : Integer X = 2;\n" +
-                "CREATE NEW FUNCTION fnEskimo(Integer:X) -> Integer:\n" +
-                "fnPrint(X);\n" +
-                "END;"));
+        System.out.println(createAst("ALTER X fnAddSkill(Damage:2,Skill:4);"));
     }
 }

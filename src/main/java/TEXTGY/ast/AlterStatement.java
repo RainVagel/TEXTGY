@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * Created by rainvagel on 07.06.16.
  */
-public class AlterStatement extends Statement {
+public class AlterStatement extends AstNode {
     private String name;
-    private Statement action;
+    private AlterAction action;
 
-    public AlterStatement(String name, Statement action) {
+    public AlterStatement(String name, AlterAction action) {
         this.name = name;
         this.action = action;
     }
 
-    public Statement getAction() {
+    public AlterAction getAction() {
         return action;
     }
 

@@ -54,4 +54,39 @@ public class BindingPublicTests {
         assertEquals(vardecX, variableX.getBinding());
         assertEquals(vardecX2, variableX2.getBinding());
     }
+
+    @Test
+    public void test2() {
+//        var : Object Sword = CREATE NEW OBJECT Sword AS TYPE Item WITH DESCRIPTION("Yo") END;
+//        var : Object Human = CREATE NEW OBJECT Human AS TYPE Creature WITH ITEM(Sword) END;
+        VariableDeclaration vardecSword = new VariableDeclaration("Sword", "Object", new ObjectDefinition("Sword", Arrays.asList(
+                new ObjectParameter("fnDescription", new StringLiteral("Yo!"))
+        ), "Creature"));
+        Variable variable = new Variable("Sword");
+        VariableDeclaration vardecHuman = new VariableDeclaration("X", "Object", new ObjectDefinition("X", Arrays.asList(
+                new ObjectParameter("fnDescription", new StringLiteral("Hello")), new ObjectParameter("fnItem", variable)
+        ), "Creature"));
+        Block program = new Block(Arrays.asList(
+                vardecSword,
+                vardecHuman
+        ));
+        bindVariables(program);
+        assertEquals(vardecSword, variable.getBinding());
+    }
+
+    @Test
+    public void test3() {
+//        var : Object Sword = CREATE NEW OBJECT Sword AS TYPE Item WITH fnDescription("Hello")END;
+//        ALTER Sword fnHasItem(Sword);
+        VariableDeclaration vardecSword = new VariableDeclaration("Sword", "Object", new ObjectDefinition("Sword", Arrays.asList(
+                new ObjectParameter("fnDescription", new StringLiteral("Yo!"))
+        ), "Item"));
+        Variable variable = new Variable("Sword");
+        Block program = new Block(Arrays.asList(
+                vardecSword,
+                new ExpressionStatement(new AlterAction("X", "fnHasItem", variable))
+        ));
+        bindVariables(program);
+        assertEquals(vardecSword, variable.getBinding());
+    }
 }

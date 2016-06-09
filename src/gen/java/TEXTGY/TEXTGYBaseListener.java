@@ -136,162 +136,6 @@ public class TEXTGYBaseListener implements TEXTGYListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAltertegevus(TEXTGYParser.AltertegevusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAltertegevus(TEXTGYParser.AltertegevusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterHasItem(TEXTGYParser.HasItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitHasItem(TEXTGYParser.HasItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterHasSkill(TEXTGYParser.HasSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitHasSkill(TEXTGYParser.HasSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterHasAttribute(TEXTGYParser.HasAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitHasAttribute(TEXTGYParser.HasAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddItem(TEXTGYParser.AddItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddItem(TEXTGYParser.AddItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddSkill(TEXTGYParser.AddSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddSkill(TEXTGYParser.AddSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAddAttribute(TEXTGYParser.AddAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAddAttribute(TEXTGYParser.AddAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRemoveItem(TEXTGYParser.RemoveItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRemoveItem(TEXTGYParser.RemoveItemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRemoveSkill(TEXTGYParser.RemoveSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRemoveSkill(TEXTGYParser.RemoveSkillContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRemoveAttribute(TEXTGYParser.RemoveAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRemoveAttribute(TEXTGYParser.RemoveAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterChangeSkillPlusMinus(TEXTGYParser.ChangeSkillPlusMinusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitChangeSkillPlusMinus(TEXTGYParser.ChangeSkillPlusMinusContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterChangeSkillRegular(TEXTGYParser.ChangeSkillRegularContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitChangeSkillRegular(TEXTGYParser.ChangeSkillRegularContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterChangeDescription(TEXTGYParser.ChangeDescriptionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitChangeDescription(TEXTGYParser.ChangeDescriptionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterObjektiloomine(TEXTGYParser.ObjektiloomineContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -371,6 +215,18 @@ public class TEXTGYBaseListener implements TEXTGYListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAttributeParameeter(TEXTGYParser.AttributeParameeterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunktsioonivaljakutseobjekt(TEXTGYParser.FunktsioonivaljakutseobjektContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunktsioonivaljakutseobjekt(TEXTGYParser.FunktsioonivaljakutseobjektContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -551,6 +407,18 @@ public class TEXTGYBaseListener implements TEXTGYListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSuluAvaldis(TEXTGYParser.SuluAvaldisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSkillAvaldis(TEXTGYParser.SkillAvaldisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSkillAvaldis(TEXTGYParser.SkillAvaldisContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

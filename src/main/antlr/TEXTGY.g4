@@ -13,7 +13,7 @@ lause
     |   iflause
     |   whilelause
     |   avaldis
-    |   objektiloomine
+//    |   objektiloomine
     |   funktsiooniloomine
     |   alterlause
     |   muutujadeklaratsioon
@@ -31,6 +31,7 @@ omistamine
 muutujadeklaratsioon
     :   'var' ':' tuup MUUTUJANIMI ('=' avaldis)?
     |   'var' MUUTUJANIMI '=' avaldis
+    |   'var' ':' tuup MUUTUJANIMI '=' objektiloomine
     ;
 
 tuup
@@ -38,6 +39,7 @@ tuup
     |   'Integer'
     |   'Double'
     |   'String'
+    |   'Object'
     ;
 
 iflause
@@ -48,43 +50,56 @@ whilelause
     :   'WHILE' '(' avaldis ')' 'DO' programm 'END'
     ;
 
+//alterlause
+//    :   'ALTER' MUUTUJANIMI altertegevus
+//    ;
+
 alterlause
-    :   'ALTER' MUUTUJANIMI altertegevus
+    :   'ALTER' MUUTUJANIMI FUNKTSIOONINIMI '(' (avaldis (',' avaldis )*)? ')'
     ;
 
-altertegevus
-    :   hastegevus
-    |   addtegevus
-    |   removetegevus
-    |   changetegevus
-    ;
+//altertegevus
+//    :   FUNKTSIOONINIMI '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'          # SkillAlter
+//    |   FUNKTSIOONINIMI '(' MUUTUJANIMI (',' MUUTUJANIMI )* ')'                         # UlejaanudAlter
+//    ;
 
-hastegevus
-    :   'HAS' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                         # HasItem
-    |   'HAS' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)*')'                         # HasSkill
-    |   'HAS' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # HasAttribute
-    ;
+//altertegevus
+//    :   hastegevus
+//    |   addtegevus
+//    |   removetegevus
+//    |   changetegevus
+//    ;
+//
+//hastegevus
+//    :   'HAS' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                         # HasItem
+//    |   'HAS' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)*')'                         # HasSkill
+//    |   'HAS' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # HasAttribute
+//    ;
+//
+//addtegevus
+//    :   'ADD' 'ITEM' '(' MUUTUJANIMI  (',' MUUTUJANIMI)* ')'                        # AddItem
+//    |   'ADD' 'SKILL' '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'        # AddSkill
+//    |   'ADD' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # AddAttribute
+//    ;
+//
+//removetegevus
+//    :   'REMOVE' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                      # RemoveItem
+//    |   'REMOVE' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                     # RemoveSkill
+//    |   'REMOVE' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                 # RemoveAttribute
+//    ;
+//
+//changetegevus
+//    :   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ('+'|'-') ARV ')'                      # ChangeSkillPlusMinus
+//    |   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'                                # ChangeSkillRegular
+//    |   'CHANGE' 'DESCRIPTION' '(' SONE ')'                                         # ChangeDescription
+//    ;
 
-addtegevus
-    :   'ADD' 'ITEM' '(' MUUTUJANIMI  (',' MUUTUJANIMI)* ')'                        # AddItem
-    |   'ADD' 'SKILL' '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'        # AddSkill
-    |   'ADD' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                    # AddAttribute
-    ;
-
-removetegevus
-    :   'REMOVE' 'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                      # RemoveItem
-    |   'REMOVE' 'SKILL' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                     # RemoveSkill
-    |   'REMOVE' 'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                 # RemoveAttribute
-    ;
-
-changetegevus
-    :   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ('+'|'-') ARV ')'                      # ChangeSkillPlusMinus
-    |   'CHANGE' 'SKILL' '(' MUUTUJANIMI ':' ARV ')'                                # ChangeSkillRegular
-    |   'CHANGE' 'DESCRIPTION' '(' SONE ')'                                         # ChangeDescription
-    ;
+//objektiloomine
+//    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' objektiparameeter (',' objektiparameeter)* 'END'
+//    ;
 
 objektiloomine
-    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' objektiparameetrid (',' objektiparameetrid)* 'END'
+    :   'CREATE' 'NEW' 'OBJECT' MUUTUJANIMI 'AS' 'TYPE' objektituup 'WITH' funktsioonivaljakutseobjekt (',' funktsioonivaljakutseobjekt)* 'END'
     ;
 
 funktsiooniloomine
@@ -98,11 +113,19 @@ objektituup
     |   'Room'
     ;
 
-objektiparameetrid
+//objektiparameetrid
+//    :   objektiparameeter (',' objektiparameeter)*
+//    ;
+
+objektiparameeter
     :   'DESCRIPTION' '(' SONE ')'                                              # DescriptionParameeter
-    |   'ITEM' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                           # ItemParameeter
-    |   'SKILL' '(' MUUTUJANIMI ':' ARV (',' MUUTUJANIMI ':' ARV)* ')'          # SkillParameeter
-    |   'ATTRIBUTE' '(' MUUTUJANIMI (',' MUUTUJANIMI)* ')'                      # AttributeParameeter
+    |   'ITEM' '(' MUUTUJANIMI ')'                                              # ItemParameeter
+    |   'SKILL' '(' MUUTUJANIMI ':' ARV ')'                                     # SkillParameeter
+    |   'ATTRIBUTE' '(' MUUTUJANIMI ')'                                         # AttributeParameeter
+    ;
+
+funktsioonivaljakutseobjekt
+    :   FUNKTSIOONINIMI '(' (avaldis (',' avaldis )*)? ')'
     ;
 
 avaldis
@@ -130,7 +153,7 @@ avaldis2
     ;
 
 avaldis1
-    :   FUNKTSIOONINIMI '(' (avaldis (',' avaldis )*)? ')' # FunktsiooniValjakutse
+    :   FUNKTSIOONINIMI '(' (avaldis (',' avaldis )*)? ')'                      # FunktsiooniValjakutse
     |   avaldis0                                                                # TriviaalneAvaldis1
     ;
 
@@ -139,6 +162,7 @@ avaldis0
     |   MUUTUJANIMI                                                             # MuutujaNimiR
     |   ARV                                                                     # ArvuLiteraalR
     |   '('avaldis')'                                                           # SuluAvaldis
+    |   MUUTUJANIMI ':' ARV                                                     # SkillAvaldis
     ;
 
 FUNKTSIOONINIMI
