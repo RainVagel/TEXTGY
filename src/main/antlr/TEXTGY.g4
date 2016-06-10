@@ -133,7 +133,7 @@ avaldis
     ;
 
 avaldis5
-    :   avaldis4 ('<'|'>'|'<='|'>='|'=='|'!='|'AND'|'OR'|'NOT') avaldis4        # Vordlemine
+    :   avaldis4 ('<'|'>'|'<='|'>='|'=='|'!='|'fnNot'|'fnOr'|'fnNot') avaldis4        # Vordlemine
     |   avaldis4                                                                # TriviaalneAvaldis5
     ;
 
